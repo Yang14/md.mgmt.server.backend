@@ -52,7 +52,7 @@ public class TestPerformance {
         long end = System.currentTimeMillis();
         logger.info(String.valueOf(System.currentTimeMillis()));
         logger.info(
-                String.format("\ntestPut1dc21fc dir use Total time: %s ms\navg time: %sms\n\n\n",
+                String.format("\ntestPut1dc21fc %s count use Total time: %s ms\navg time: %sms\n\n\n",
                         count, (end - start), (end - start) / (count * 1.0)));
     }
 
@@ -61,15 +61,15 @@ public class TestPerformance {
         logger.info("\n\n\n" + String.valueOf(System.currentTimeMillis()));
         long start = System.currentTimeMillis();
         PutMdAttrDto putMdAttrDto = new PutMdAttrDto();
-        for (int i = 0; i < count; i++) {
-            putMdAttrDto.setExactCode(new ExactCode((long) -1, "be" + i));
+        for (int i = 0; i < count * 100; i++) {
+            putMdAttrDto.setExactCode(new ExactCode((long) 100002, "be"));
             putMdAttrDto.setMdAttr(mdAttr);
             putMdAttrService.putMdAttr(putMdAttrDto);
         }
         long end = System.currentTimeMillis();
         logger.info(String.valueOf(System.currentTimeMillis()));
         logger.info(
-                String.format("\ntestPut1dc2fcs use Total time: %s ms\navg time: %sms\n\n\n",
+                String.format("\ntestPut1dc2fcs %s count use Total time: %s ms\navg time: %sms\n\n\n",
                         count, (end - start), (end - start) / (count * 1.0)));
     }
 
@@ -83,7 +83,7 @@ public class TestPerformance {
         long end = System.currentTimeMillis();
         logger.info(String.valueOf(System.currentTimeMillis()));
         logger.info(
-                String.format("\ntestGetFile use Total time: %s ms\navg time: %sms\n\n\n",
+                String.format("\ntestGetFile %s count use Total time: %s ms\navg time: %sms\n\n\n",
                         count, (end - start), (end - start) / (count * 1.0)));
     }
 
@@ -97,8 +97,20 @@ public class TestPerformance {
         long end = System.currentTimeMillis();
         logger.info(String.valueOf(System.currentTimeMillis()));
         logger.info(
-                String.format("\ntestGetDirList use Total time: %s ms\navg time: %sms\n\n\n",
+                String.format("\ntestGetDirList %s count use Total time: %s ms\navg time: %sms\n\n\n",
                         count, (end - start), (end - start) / (count * 1.0)));
     }
-    
+
+    @Test
+    public void testGet1DirList() {
+        logger.info("\n\n\n" + String.valueOf(System.currentTimeMillis()));
+        long start = System.currentTimeMillis();
+        logger.info(getMdAttrService.getDirMdAttrList(100001).size() + "");
+        long end = System.currentTimeMillis();
+        logger.info(String.valueOf(System.currentTimeMillis()));
+        logger.info(
+                String.format("\ntestGetDirList %s count use Total time: %s ms\navg time: %sms\n\n\n",
+                        count, (end - start), (end - start) / (count * 1.0)));
+    }
+
 }
