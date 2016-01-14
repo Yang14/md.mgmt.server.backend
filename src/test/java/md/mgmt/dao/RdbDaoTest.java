@@ -25,10 +25,11 @@ public class RdbDaoTest {
     @Test
     public void testSetOrCreateHashBucket() {
         long distrCode = 1000;
-        String fileCode = "abcded";
+        String fileCode = "abcded1";
         if (!rdbDao.setOrCreateHashBucket(distrCode, fileCode)) {
             logger.error(String.format("set hash bucket err"));
         }
+        logger.info(String.format("set hash bucket ok"));
     }
 
     @Test
