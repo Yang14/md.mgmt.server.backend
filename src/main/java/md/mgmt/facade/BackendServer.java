@@ -18,7 +18,7 @@ import io.netty.handler.logging.LoggingHandler;
  */
 public class BackendServer {
 
-    static final int PORT = Integer.parseInt(System.getProperty("port", String.valueOf("8007")));
+    static final int PORT = Integer.parseInt(System.getProperty("port", String.valueOf("8008")));
 
     public void run() throws InterruptedException {
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);

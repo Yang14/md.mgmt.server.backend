@@ -24,7 +24,7 @@ public class RdbDaoTest {
 
     @Test
     public void testSetOrCreateHashBucket() {
-        long distrCode = 1000;
+        String distrCode = 1000 + "";
         String fileCode = "abcded1";
         if (!rdbDao.setOrCreateHashBucket(distrCode, fileCode)) {
             logger.error(String.format("set hash bucket err"));
@@ -34,7 +34,7 @@ public class RdbDaoTest {
 
     @Test
     public void testGetFileMdAttrList() {
-        long distrCode = 1000;
+        String distrCode = 1000 + "";
         List<MdAttr> mdAttrs = rdbDao.getDirMdAttrList(distrCode);
         if (mdAttrs == null) {
             logger.error("get File MdAttrs null");

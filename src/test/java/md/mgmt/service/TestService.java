@@ -53,6 +53,6 @@ public class TestService {
 
     @Test
     public void testGetDirMdAttrList() {
-        logger.info(getMdAttrService.getDirMdAttrList(distrCode).toString());
+        logger.info(getMdAttrService.getDirMdAttrList(distrCode+"").toString());
     }
 }

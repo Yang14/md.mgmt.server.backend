@@ -92,7 +92,7 @@ public class TestPerformance {
         logger.info("\n\n\n" + String.valueOf(System.currentTimeMillis()));
         long start = System.currentTimeMillis();
         for (int i = 0; i < count; i++) {
-            getMdAttrService.getDirMdAttrList(i);
+            getMdAttrService.getDirMdAttrList(i+"");
         }
         long end = System.currentTimeMillis();
         logger.info(String.valueOf(System.currentTimeMillis()));
@@ -105,7 +105,7 @@ public class TestPerformance {
     public void testGet1DirList() {
         logger.info("\n\n\n" + String.valueOf(System.currentTimeMillis()));
         long start = System.currentTimeMillis();
-        logger.info(getMdAttrService.getDirMdAttrList(100001).size() + "");
+        logger.info(getMdAttrService.getDirMdAttrList("100001").size() + "");
         long end = System.currentTimeMillis();
         logger.info(String.valueOf(System.currentTimeMillis()));
         logger.info(

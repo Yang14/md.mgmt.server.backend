@@ -27,7 +27,7 @@ public class PutMdAttrServiceImpl implements PutMdAttrService {
         }
 
         ExactCode exactCode = putMdAttrDto.getExactCode();
-        if (!rdbDao.setOrCreateHashBucket(exactCode.getDistrCode(), exactCode.getFileCode())) {
+        if (!rdbDao.setOrCreateHashBucket(exactCode.getDistrCode() + "", exactCode.getFileCode())) {
             logger.error(String.format("setOrCreateHashBucket err:%s", exactCode));
             return false;
         }
