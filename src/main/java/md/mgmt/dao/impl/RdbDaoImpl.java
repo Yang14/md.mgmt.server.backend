@@ -46,6 +46,7 @@ public class RdbDaoImpl implements RdbDao {
             }
             fileCodeList.add(fileCode);
             db.put(String.valueOf(distrCode).getBytes(), JSON.toJSONString(fileCodeList).getBytes());
+            return true;
         } catch (Exception e) {
             logger.error(String.format("[ERROR] caught the unexpected exception -- %s\n", e));
         }
@@ -66,9 +67,9 @@ public class RdbDaoImpl implements RdbDao {
     @Override
     public MdAttr getFileMdAttr(String fileCode) {
         try {
-            byte[] indexBytes = db.get(fileCode.getBytes(RDB_DECODE));
-            if (indexBytes != null) {
-                return JSON.parseObject(new String(indexBytes, RDB_DECODE), MdAttr.class);
+            byte[] attrBytes = db.get(fileCode.getBytes(RDB_DECODE));
+            if (attrBytes != null) {
+                return JSON.parseObject(new String(attrBytes, RDB_DECODE), MdAttr.class);
             }
         } catch (Exception e) {
             logger.error(String.format("[ERROR] caught the unexpected exception -- %s\n", e));
@@ -84,12 +85,12 @@ public class RdbDaoImpl implements RdbDao {
             if (bytes != null) {
                 List<String> fileCodeList = JSON.parseObject(new String(bytes, RDB_DECODE), List.class);
                 for (String fileCode : fileCodeList) {
-                    byte[] indexBytes = db.get(fileCode.getBytes(RDB_DECODE));
-                    if (indexBytes != null) {
-                        mdAttrs.add(JSON.parseObject(new String(indexBytes, RDB_DECODE), MdAttr.class));
+                    byte[] attrBytes = db.get(fileCode.getBytes(RDB_DECODE));
+                    if (attrBytes != null) {
+                        mdAttrs.add(JSON.parseObject(new String(attrBytes, RDB_DECODE), MdAttr.class));
                     }
-                    return mdAttrs;
                 }
+                return mdAttrs;
             }
         } catch (Exception e) {
             logger.error(String.format("[ERROR] caught the unexpected exception -- %s\n", e));

@@ -26,9 +26,9 @@ public class TestService {
     @Autowired
     private GetMdAttrService getMdAttrService;
 
-    private MdAttr mdAttr;
+    private MdAttr mdAttr = new MdAttr();
     private long distrCode = 99999;
-    private String fileCode = "backend-fileCode1";
+    private String fileCode = "backend-fileCode2";
 
     @Before
     public void setUp() {
