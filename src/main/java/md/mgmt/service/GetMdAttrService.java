@@ -11,6 +11,6 @@ public interface GetMdAttrService {
 
     public MdAttr getFileMdAttr(String fileCode);
 
-    public List<MdAttr> getDirMdAttrList(long distrCode);
+    public List<MdAttr> getDirMdAttrList(String distrCode);
 
 }

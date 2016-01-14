@@ -27,7 +27,7 @@ public class GetMdAttrServiceImpl implements GetMdAttrService {
     }
 
     @Override
-    public List<MdAttr> getDirMdAttrList(long distrCode) {
+    public List<MdAttr> getDirMdAttrList(String distrCode) {
         return rdbDao.getDirMdAttrList(distrCode);
     }
 }

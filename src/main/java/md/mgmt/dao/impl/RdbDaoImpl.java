@@ -35,10 +35,10 @@ public class RdbDaoImpl implements RdbDao {
     }
 
     @Override
-    public boolean setOrCreateHashBucket(long distrCode, String fileCode) {
+    public boolean setOrCreateHashBucket(String distrCode, String fileCode) {
         List<String> fileCodeList;
         try {
-            byte[] bytes = db.get(String.valueOf(distrCode).getBytes(RDB_DECODE));
+            byte[] bytes = db.get(distrCode.getBytes(RDB_DECODE));
             if (bytes != null) {
                 fileCodeList = JSON.parseObject(new String(bytes, RDB_DECODE), List.class);
             } else {
@@ -78,10 +78,10 @@ public class RdbDaoImpl implements RdbDao {
     }
 
     @Override
-    public List<MdAttr> getDirMdAttrList(long distrCode) {
+    public List<MdAttr> getDirMdAttrList(String distrCode) {
         List<MdAttr> mdAttrs = new ArrayList<MdAttr>();
         try {
-            byte[] bytes = db.get(String.valueOf(distrCode).getBytes(RDB_DECODE));
+            byte[] bytes = db.get(distrCode.getBytes(RDB_DECODE));
             if (bytes != null) {
                 List<String> fileCodeList = JSON.parseObject(new String(bytes, RDB_DECODE), List.class);
                 for (String fileCode : fileCodeList) {
