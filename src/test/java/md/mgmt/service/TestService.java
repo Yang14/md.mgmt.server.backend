@@ -48,6 +48,7 @@ public class TestService {
 
     @Test
     public void testGetFileMdAttr() {
+        String fileCode = "f8a8509dc4c9496091ed3d53a55f5ba2";
         logger.info(getMdAttrService.getFileMdAttr(fileCode).toString());
     }
 
