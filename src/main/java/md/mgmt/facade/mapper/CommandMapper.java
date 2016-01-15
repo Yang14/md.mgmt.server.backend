@@ -6,6 +6,7 @@ import md.mgmt.base.md.MdAttr;
 import md.mgmt.base.ops.ReqDto;
 import md.mgmt.base.ops.RespDto;
 import md.mgmt.facade.req.PutMdAttrDto;
+import md.mgmt.facade.resp.MdAttrListDto;
 import md.mgmt.service.GetMdAttrService;
 import md.mgmt.service.PutMdAttrService;
 import org.slf4j.Logger;
@@ -61,7 +62,8 @@ public class CommandMapper {
         if (mdAttrs == null) {
             return getRespStr(false, "列表目录元数据失败", null);
         }
-        return getRespStr(true, "列表目录元数据成功", mdAttrs);
+        MdAttrListDto mdAttrListDto = new MdAttrListDto(mdAttrs);
+        return getRespStr(true, "列表目录元数据成功", mdAttrListDto);
     }
 
     private String putMdAttr(String opsContent) {
