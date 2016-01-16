@@ -3,6 +3,7 @@ package md.mgmt.service;
 import md.mgmt.base.md.ExactCode;
 import md.mgmt.base.md.MdAttr;
 import md.mgmt.facade.req.PutMdAttrDto;
+import md.mgmt.facade.req.RenameMdAttrDto;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +27,9 @@ public class TestService {
     @Autowired
     private GetMdAttrService getMdAttrService;
 
+    @Autowired
+    private RenameMdAttrService renameMdAttrService;
+
     private MdAttr mdAttr = new MdAttr();
     private long distrCode = 99999;
     private String fileCode = "backend-fileCode2";
@@ -48,12 +52,20 @@ public class TestService {
 
     @Test
     public void testGetFileMdAttr() {
-        String fileCode = "f8a8509dc4c9496091ed3d53a55f5ba2";
+       // String fileCode = "f8a8509dc4c9496091ed3d53a55f5ba2";
         logger.info(getMdAttrService.getFileMdAttr(fileCode).toString());
     }
 
     @Test
     public void testGetDirMdAttrList() {
         logger.info(getMdAttrService.getDirMdAttrList(distrCode+"").toString());
+    }
+
+    @Test
+    public void testRenameMdAttr(){
+        RenameMdAttrDto mdAttrDto = new RenameMdAttrDto();
+        mdAttrDto.setFileCode(fileCode);
+        mdAttrDto.setNewName("backend2.txt");
+        logger.info(renameMdAttrService.renameMdAttr(mdAttrDto) +"");
     }
 }

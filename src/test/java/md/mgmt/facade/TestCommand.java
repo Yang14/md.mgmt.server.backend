@@ -1,12 +1,6 @@
 package md.mgmt.facade;
 
-import md.mgmt.base.md.ExactCode;
-import md.mgmt.base.md.MdAttr;
 import md.mgmt.facade.mapper.CommandMapper;
-import md.mgmt.facade.req.PutMdAttrDto;
-import md.mgmt.service.GetMdAttrService;
-import md.mgmt.service.PutMdAttrService;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;

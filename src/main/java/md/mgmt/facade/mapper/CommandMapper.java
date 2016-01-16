@@ -6,9 +6,11 @@ import md.mgmt.base.md.MdAttr;
 import md.mgmt.base.ops.ReqDto;
 import md.mgmt.base.ops.RespDto;
 import md.mgmt.facade.req.PutMdAttrDto;
+import md.mgmt.facade.req.RenameMdAttrDto;
 import md.mgmt.facade.resp.MdAttrListDto;
 import md.mgmt.service.GetMdAttrService;
 import md.mgmt.service.PutMdAttrService;
+import md.mgmt.service.RenameMdAttrService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class CommandMapper {
     @Autowired
     private GetMdAttrService getMdAttrService;
 
+    @Autowired
+    private RenameMdAttrService renameMdAttrService;
+
     /**
      * 按客户端命令选择对应的服务
      */
@@ -45,8 +50,19 @@ public class CommandMapper {
             return getFileMdAttr(opsContent);
         } else if (reqDto.getOpsType() == OpsTypeEnum.LIST_DIR.getCode()) {
             return getDirMdAttrList(opsContent);
+        } else if (reqDto.getOpsType() == OpsTypeEnum.RENAME_FILE.getCode()) {
+            return renameMdAttr(opsContent);
         }
         return getRespStr(false, "参数错误", null);
+    }
+
+    private String renameMdAttr(String opsContent) {
+        RenameMdAttrDto renameMdAttrDto = JSON.parseObject(opsContent, RenameMdAttrDto.class);
+        boolean result = renameMdAttrService.renameMdAttr(renameMdAttrDto);
+        if (!result) {
+            return getRespStr(false, "重命名元数据失败", null);
+        }
+        return getRespStr(true, "重命名元数据成功", null);
     }
 
     private String getFileMdAttr(String opsContent) {
