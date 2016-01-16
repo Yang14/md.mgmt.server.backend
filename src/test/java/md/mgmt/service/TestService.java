@@ -67,5 +67,6 @@ public class TestService {
         mdAttrDto.setFileCode(fileCode);
         mdAttrDto.setNewName("backend2.txt");
         logger.info(renameMdAttrService.renameMdAttr(mdAttrDto) +"");
+        testGetFileMdAttr();
     }
 }
