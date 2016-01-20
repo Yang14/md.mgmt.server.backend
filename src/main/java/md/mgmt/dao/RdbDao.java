@@ -1,7 +1,6 @@
 package md.mgmt.dao;
 
 import md.mgmt.base.md.MdAttr;
-import md.mgmt.base.md.MdIndex;
 
 import java.util.List;
 
@@ -19,5 +18,5 @@ public interface RdbDao {
 
     public MdAttr getFileMdAttr(String fileCode);
 
-    public List<MdAttr> getDirMdAttrList(String distrCode);
+    public List<MdAttr> getDirMdAttrList(List<String> fileCodeList);
 }

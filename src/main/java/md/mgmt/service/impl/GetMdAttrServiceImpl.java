@@ -2,6 +2,7 @@ package md.mgmt.service.impl;
 
 import md.mgmt.base.md.MdAttr;
 import md.mgmt.dao.RdbDao;
+import md.mgmt.dao.RedisDao;
 import md.mgmt.service.GetMdAttrService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,9 @@ public class GetMdAttrServiceImpl implements GetMdAttrService {
     @Autowired
     private RdbDao rdbDao;
 
+    @Autowired
+    private RedisDao redisDao;
+
     @Override
     public MdAttr getFileMdAttr(String fileCode) {
         return rdbDao.getFileMdAttr(fileCode);
@@ -28,6 +32,7 @@ public class GetMdAttrServiceImpl implements GetMdAttrService {
 
     @Override
     public List<MdAttr> getDirMdAttrList(String distrCode) {
-        return rdbDao.getDirMdAttrList(distrCode);
+        List<String> fileCodes = redisDao.getHashBucket(distrCode);
+        return rdbDao.getDirMdAttrList(fileCodes);
     }
 }

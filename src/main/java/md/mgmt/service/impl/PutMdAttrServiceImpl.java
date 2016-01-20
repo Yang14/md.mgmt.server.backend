@@ -2,6 +2,7 @@ package md.mgmt.service.impl;
 
 import md.mgmt.base.md.ExactCode;
 import md.mgmt.dao.RdbDao;
+import md.mgmt.dao.RedisDao;
 import md.mgmt.facade.req.PutMdAttrDto;
 import md.mgmt.service.PutMdAttrService;
 import org.slf4j.Logger;
@@ -19,18 +20,17 @@ public class PutMdAttrServiceImpl implements PutMdAttrService {
     @Autowired
     private RdbDao rdbDao;
 
+    @Autowired
+    private RedisDao redisDao;
+
     @Override
     public boolean putMdAttr(PutMdAttrDto putMdAttrDto) {
         if (putMdAttrDto == null || putMdAttrDto.getExactCode() == null
                 || putMdAttrDto.getMdAttr() == null) {
             return false;
         }
-
         ExactCode exactCode = putMdAttrDto.getExactCode();
-        if (!rdbDao.setOrCreateHashBucket(exactCode.getDistrCode() + "", exactCode.getFileCode())) {
-            logger.error(String.format("setOrCreateHashBucket err:%s", exactCode));
-            return false;
-        }
+        redisDao.setOrCreateHashBucket(exactCode.getDistrCode() + "", exactCode.getFileCode());
         return rdbDao.putMdAttr(exactCode.getFileCode(), putMdAttrDto.getMdAttr());
     }
 }

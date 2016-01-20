@@ -78,17 +78,13 @@ public class RdbDaoImpl implements RdbDao {
     }
 
     @Override
-    public List<MdAttr> getDirMdAttrList(String distrCode) {
+    public List<MdAttr> getDirMdAttrList(List<String> fileCodeList) {
         List<MdAttr> mdAttrs = new ArrayList<MdAttr>();
         try {
-            byte[] bytes = db.get(distrCode.getBytes(RDB_DECODE));
-            if (bytes != null) {
-                List<String> fileCodeList = JSON.parseObject(new String(bytes, RDB_DECODE), List.class);
-                for (String fileCode : fileCodeList) {
-                    byte[] attrBytes = db.get(fileCode.getBytes(RDB_DECODE));
-                    if (attrBytes != null) {
-                        mdAttrs.add(JSON.parseObject(new String(attrBytes, RDB_DECODE), MdAttr.class));
-                    }
+            for (String fileCode : fileCodeList) {
+                byte[] attrBytes = db.get(fileCode.getBytes(RDB_DECODE));
+                if (attrBytes != null) {
+                    mdAttrs.add(JSON.parseObject(new String(attrBytes, RDB_DECODE), MdAttr.class));
                 }
                 return mdAttrs;
             }
