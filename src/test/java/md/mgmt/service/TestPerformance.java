@@ -44,7 +44,7 @@ public class TestPerformance {
         logger.info("\n\n\n" + String.valueOf(System.currentTimeMillis()));
         long start = System.currentTimeMillis();
         PutMdAttrDto putMdAttrDto = new PutMdAttrDto();
-        for (int i = 100000; i < count*100 + 100000; i++) {
+        for (int i = 1; i < count; i++) {
             putMdAttrDto.setExactCode(new ExactCode((long) i, "be" + i));
             putMdAttrDto.setMdAttr(mdAttr);
             putMdAttrService.putMdAttr(putMdAttrDto);
@@ -61,7 +61,7 @@ public class TestPerformance {
         logger.info("\n\n\n" + String.valueOf(System.currentTimeMillis()));
         long start = System.currentTimeMillis();
         PutMdAttrDto putMdAttrDto = new PutMdAttrDto();
-        for (int i = 0; i < count; i++) {
+        for (int i = 1; i < count; i++) {
             putMdAttrDto.setExactCode(new ExactCode((long) 100002, "be"));
             putMdAttrDto.setMdAttr(mdAttr);
             putMdAttrService.putMdAttr(putMdAttrDto);
@@ -77,7 +77,7 @@ public class TestPerformance {
     public void testGetFile() {
         logger.info("\n\n\n" + String.valueOf(System.currentTimeMillis()));
         long start = System.currentTimeMillis();
-        for (int i = 0; i < count; i++) {
+        for (int i = 1; i < count; i++) {
             getMdAttrService.getFileMdAttr("be" + i);
         }
         long end = System.currentTimeMillis();
@@ -91,7 +91,7 @@ public class TestPerformance {
     public void testGetDirList() {
         logger.info("\n\n\n" + String.valueOf(System.currentTimeMillis()));
         long start = System.currentTimeMillis();
-        for (int i = 0; i < count; i++) {
+        for (int i = 1; i < count; i++) {
             getMdAttrService.getDirMdAttrList(i+"");
         }
         long end = System.currentTimeMillis();
@@ -105,7 +105,7 @@ public class TestPerformance {
     public void testGet1DirList() {
         logger.info("\n\n\n" + String.valueOf(System.currentTimeMillis()));
         long start = System.currentTimeMillis();
-        logger.info(getMdAttrService.getDirMdAttrList("100001").size() + "");
+        logger.info(getMdAttrService.getDirMdAttrList("100002").size() + "");
         long end = System.currentTimeMillis();
         logger.info(String.valueOf(System.currentTimeMillis()));
         logger.info(

@@ -1,6 +1,7 @@
 package md.mgmt.dao;
 
 import md.mgmt.base.md.MdAttr;
+import md.mgmt.base.md.MdIndex;
 
 import java.util.List;
 
