@@ -16,7 +16,7 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>log/client.log</File>
+        <File>log/backend.log</File>
         <encoder>
             <pattern>%d{MMdd.HHmmss} [%-4t] %-5p L:%-3L %-22c{0} - %m%n</pattern>
         </encoder>
@@ -27,7 +27,7 @@
         </filter>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>log/client.log.%d{yyyyMMdd}</fileNamePattern>
+            <fileNamePattern>log/backend.log.%d{yyyyMMdd}</fileNamePattern>
         </rollingPolicy>
     </appender>
 

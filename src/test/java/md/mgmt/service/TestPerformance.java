@@ -44,7 +44,7 @@ public class TestPerformance {
         logger.info("\n\n\n" + String.valueOf(System.currentTimeMillis()));
         long start = System.currentTimeMillis();
         PutMdAttrDto putMdAttrDto = new PutMdAttrDto();
-        for (int i = 0; i < count; i++) {
+        for (int i = 100000; i < count*100 + 100000; i++) {
             putMdAttrDto.setExactCode(new ExactCode((long) i, "be" + i));
             putMdAttrDto.setMdAttr(mdAttr);
             putMdAttrService.putMdAttr(putMdAttrDto);
@@ -53,7 +53,7 @@ public class TestPerformance {
         logger.info(String.valueOf(System.currentTimeMillis()));
         logger.info(
                 String.format("\ntestPut1dc21fc %s count use Total time: %s ms\navg time: %sms\n\n\n",
-                        count, (end - start), (end - start) / (count * 1.0)));
+                        count*100, (end - start), (end - start) / (count * 1.0)));
     }
 
     @Test
