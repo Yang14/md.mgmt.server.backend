@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * Created by yang on 16-1-20.
  */
+@Deprecated
 public class RocksDBColumnTest {
 
     private static String db_path = "/data/rocksdb/test4";
