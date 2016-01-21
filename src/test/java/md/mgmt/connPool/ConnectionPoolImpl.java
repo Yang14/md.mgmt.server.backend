@@ -50,7 +50,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
      */
     private boolean debug = false;
 
-    private static String dbPath;
+    private String dbPath;
     private static Options options = new Options().setCreateIfMissing(true);
 
     static {
@@ -274,12 +274,12 @@ public class ConnectionPoolImpl implements ConnectionPool {
         this.debug = debug;
     }
 
-    public static String getDbPath() {
+    public String getDbPath() {
         return dbPath;
     }
 
-    public static void setDbPath(String dbPath) {
-        ConnectionPoolImpl.dbPath = dbPath;
+    public void setDbPath(String dbPath) {
+        dbPath = dbPath;
     }
 }
 

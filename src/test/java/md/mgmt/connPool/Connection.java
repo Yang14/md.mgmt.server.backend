@@ -25,6 +25,14 @@ public class Connection {
         pool.releaseConnection(this);
     }
 
+    public RocksDB getDb() {
+        return db;
+    }
+
+    public void setDb(RocksDB db) {
+        this.db = db;
+    }
+
     //省略其他逻辑方法 ... ...
 }
 

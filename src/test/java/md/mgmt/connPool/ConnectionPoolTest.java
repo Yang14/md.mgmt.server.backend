@@ -3,6 +3,8 @@ package md.mgmt.connPool;
 /**
  * Created by Mr-yang on 16-1-21.
  */
+import org.rocksdb.RocksDBException;
+
 import java.util.Random;
 
 public class ConnectionPoolTest {
@@ -26,7 +28,12 @@ public class ConnectionPoolTest {
         public void run() {
 
             for (int i = 0; i < 100; i++) {
-                Connection conn = pool.getConnection();
+                Connection conn = null;
+                try {
+                    conn = pool.getConnection();
+                } catch (RocksDBException e) {
+
+                }
                 System.out.println("Thread " + threadName
                         + " aquired a connection.");
 //                int sleepTime = (3 + random.nextInt(20)) * 1000;
