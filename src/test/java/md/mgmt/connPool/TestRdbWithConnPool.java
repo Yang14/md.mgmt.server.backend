@@ -26,19 +26,19 @@ public class TestRdbWithConnPool implements Runnable {
         Connection conn = null;
         try {
             conn = pool.getConnection();
-            conn.put(key.getBytes(), JSON.toJSONString(obj).getBytes());
-            conn.close();
+            conn.getDb().put(key.getBytes(), JSON.toJSONString(obj).getBytes());
         } catch (RocksDBException e) {
             e.printStackTrace();
-        } finally {
+        }finally {
+            conn.close();
         }
     }
 
     public MdAttr getMdAttr(String key) {
-        Connection conn=null;
+        Connection conn = null;
         try {
             conn = pool.getConnection();
-            byte[] attrBytes = conn.get(key.getBytes());
+            byte[] attrBytes = conn.getDb().get(key.getBytes());
             if (attrBytes != null) {
                 return JSON.parseObject(new String(attrBytes), MdAttr.class);
             }
@@ -52,21 +52,17 @@ public class TestRdbWithConnPool implements Runnable {
 
     public static void main(String[] args) throws Exception {
         ConnectionPoolImpl poolImpl = new ConnectionPoolImpl();
-        poolImpl.setMinSize(5);
+        poolImpl.setMinSize(1);
         poolImpl.setMaxSize(100);
         poolImpl.setDbPath("/data/test/conn");
-        poolImpl.setDebug(true);
+        poolImpl.setDebug(false);
 
-        TestRdbWithConnPool testConn = new TestRdbWithConnPool(poolImpl);
-        for (int i = 0; i < 100; i++) {
-            testConn.putObj(i + "", testConn.getMdAttr());
-        }
-        for (int i = 0; i < 100; i++) {
-            logger.info(testConn.getMdAttr(i + "").toString());
+        for (int i=0;i<10;i++){
+            new Thread(new TestRdbWithConnPool(poolImpl)).start();
         }
     }
 
-    public MdAttr getMdAttr() {
+    public static MdAttr getMdAttr() {
         MdAttr mdAttr = new MdAttr();
         mdAttr.setName("backend-fileCode");
         mdAttr.setSize(7878);
@@ -78,5 +74,11 @@ public class TestRdbWithConnPool implements Runnable {
     @Override
     public void run() {
 
+        for (int i = 0; i < 10; i++) {
+            this.putObj(Thread.currentThread().getName(), TestRdbWithConnPool.getMdAttr());
+        }
+        for (int i = 0; i < 10; i++) {
+            logger.info(i + Thread.currentThread().getName() + "-----" +this.getMdAttr(Thread.currentThread().getName()).toString());
+        }
     }
 }
