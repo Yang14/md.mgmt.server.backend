@@ -86,8 +86,8 @@ public class RdbDaoImpl implements RdbDao {
                 if (attrBytes != null) {
                     mdAttrs.add(JSON.parseObject(new String(attrBytes, RDB_DECODE), MdAttr.class));
                 }
-                return mdAttrs;
             }
+            return mdAttrs;
         } catch (Exception e) {
             logger.error(String.format("[ERROR] caught the unexpected exception -- %s\n", e));
         }

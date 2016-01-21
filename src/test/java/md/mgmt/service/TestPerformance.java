@@ -61,8 +61,8 @@ public class TestPerformance {
         logger.info("\n\n\n" + String.valueOf(System.currentTimeMillis()));
         long start = System.currentTimeMillis();
         PutMdAttrDto putMdAttrDto = new PutMdAttrDto();
-        for (int i = 1; i < count; i++) {
-            putMdAttrDto.setExactCode(new ExactCode((long) 100002, "be"));
+        for (int i = 1; i < 10 * count; i++) {
+            putMdAttrDto.setExactCode(new ExactCode((long) 200002, "be" + i));
             putMdAttrDto.setMdAttr(mdAttr);
             putMdAttrService.putMdAttr(putMdAttrDto);
         }
@@ -105,7 +105,7 @@ public class TestPerformance {
     public void testGet1DirList() {
         logger.info("\n\n\n" + String.valueOf(System.currentTimeMillis()));
         long start = System.currentTimeMillis();
-        logger.info(getMdAttrService.getDirMdAttrList("100002").size() + "");
+        getMdAttrService.getDirMdAttrList("200002");
         long end = System.currentTimeMillis();
         logger.info(String.valueOf(System.currentTimeMillis()));
         logger.info(

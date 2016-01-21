@@ -22,7 +22,7 @@ public class RedisDaoImpl implements RedisDao {
 
     @Override
     public void setOrCreateHashBucket(String key, String fileCode) {
-        jedis.lpush(key, fileCode);
+        jedis.rpush(key, fileCode);
     }
 
     @Override

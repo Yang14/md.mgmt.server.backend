@@ -35,7 +35,7 @@ public class RdbDaoTest {
     @Test
     public void testGetFileMdAttrList() {
         String distrCode = 1000 + "";
-        List<MdAttr> mdAttrs = rdbDao.getDirMdAttrList(distrCode);
+        List<MdAttr> mdAttrs = rdbDao.getDirMdAttrList(null);
         if (mdAttrs == null) {
             logger.error("get File MdAttrs null");
         } else {
