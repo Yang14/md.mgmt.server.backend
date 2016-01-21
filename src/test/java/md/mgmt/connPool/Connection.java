@@ -1,36 +1,19 @@
 package md.mgmt.connPool;
 
-import org.rocksdb.Options;
 import org.rocksdb.RocksDB;
-import org.rocksdb.RocksDBException;
 
 /**
  * Created by Mr-yang on 16-1-21.
  */
-public class Connection {
-    static {
-        RocksDB.loadLibrary();
-    }
-
-    private static Options options = new Options().setCreateIfMissing(true);
-
-    /**
-     * rocksdb连接对象
-     */
-    private RocksDB db;
+public class Connection extends RocksDB{
 
     /**
      * 连接池
      */
-    private final ConnectionPool pool;
+    private ConnectionPool pool;
 
-    public Connection(ConnectionPool pool, String dbPath) {
+    public void setPool(ConnectionPool pool) {
         this.pool = pool;
-        try {
-            this.db = RocksDB.open(options, dbPath);
-        } catch (RocksDBException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -40,14 +23,6 @@ public class Connection {
         pool.releaseConnection(this);
     }
 
-    public RocksDB getDb() {
-        return db;
-    }
 
-    public void setDb(RocksDB db) {
-        this.db = db;
-    }
-
-    //省略其他逻辑方法 ... ...
 }
 
