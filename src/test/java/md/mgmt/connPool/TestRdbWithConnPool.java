@@ -23,22 +23,29 @@ public class TestRdbWithConnPool implements Runnable {
     }
 
     public void putObj(String key, Object obj) {
+        Connection conn = null;
         try {
-            Connection conn = pool.getConnection();
-            conn.put(key.getBytes(), JSON.toJSONString(obj).getBytes());
+            conn = pool.getConnection();
+            conn.getDb().put(key.getBytes(), JSON.toJSONString(obj).getBytes());
         } catch (RocksDBException e) {
             e.printStackTrace();
+        }finally {
+            conn.close();
         }
     }
 
     public MdAttr getMdAttr(String key) {
+        Connection conn = null;
         try {
-            byte[] attrBytes = pool.getConnection().get(key.getBytes());
+            conn = pool.getConnection();
+            byte[] attrBytes = conn.getDb().get(key.getBytes());
             if (attrBytes != null) {
                 return JSON.parseObject(new String(attrBytes), MdAttr.class);
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            conn.close();
         }
         return null;
     }

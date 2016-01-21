@@ -5,8 +5,8 @@ import org.rocksdb.RocksDB;
 /**
  * Created by Mr-yang on 16-1-21.
  */
-public class Connection extends RocksDB{
-
+public class Connection {
+    private RocksDB db;
     /**
      * 连接池
      */
@@ -14,6 +14,14 @@ public class Connection extends RocksDB{
 
     public void setPool(ConnectionPool pool) {
         this.pool = pool;
+    }
+
+    public RocksDB getDb() {
+        return db;
+    }
+
+    public void setDb(RocksDB db) {
+        this.db = db;
     }
 
     /**

@@ -19,6 +19,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
 
 
     private static Options options = new Options().setCreateIfMissing(true);
+
     static {
         RocksDB.loadLibrary();
     }
@@ -68,7 +69,8 @@ public class ConnectionPoolImpl implements ConnectionPool {
         initialized = true;
         if (debug) debugPrint("Connection pool initialized!");
         for (int i = 0; i < minSize; i++) {
-            Connection conn = (Connection) RocksDB.open(options, dbPath);
+            Connection conn = new Connection();
+            conn.setDb(RocksDB.open(options, dbPath));
             conn.setPool(this);
             freeList.add(conn);
             ++totalSize;
@@ -157,7 +159,8 @@ public class ConnectionPoolImpl implements ConnectionPool {
         Connection result = null;
         int lastIndex = localStep - 1;
         for (int i = 0; i < localStep; i++) {
-            Connection conn = (Connection) RocksDB.open(options, dbPath);
+            Connection conn = new Connection();
+            conn.setDb(RocksDB.open(options, dbPath));
             conn.setPool(this);
             ++totalSize;
             if (i == lastIndex) {
@@ -282,7 +285,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
     }
 
     public void setDbPath(String dbPath) {
-        dbPath = dbPath;
+        this.dbPath = dbPath;
     }
 }
 
