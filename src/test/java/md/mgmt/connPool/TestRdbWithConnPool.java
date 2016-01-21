@@ -25,7 +25,7 @@ public class TestRdbWithConnPool implements Runnable {
     public void putObj(String key, Object obj) {
         try {
             Connection conn = pool.getConnection();
-            conn.getDb().put(key.getBytes(), JSON.toJSONString(obj).getBytes());
+            conn.put(key.getBytes(), JSON.toJSONString(obj).getBytes());
         } catch (RocksDBException e) {
             e.printStackTrace();
         }
@@ -33,7 +33,7 @@ public class TestRdbWithConnPool implements Runnable {
 
     public MdAttr getMdAttr(String key) {
         try {
-            byte[] attrBytes = pool.getConnection().getDb().get(key.getBytes());
+            byte[] attrBytes = pool.getConnection().get(key.getBytes());
             if (attrBytes != null) {
                 return JSON.parseObject(new String(attrBytes), MdAttr.class);
             }

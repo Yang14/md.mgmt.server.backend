@@ -4,6 +4,8 @@ package md.mgmt.connPool;
  * Created by Mr-yang on 16-1-21.
  */
 
+import org.rocksdb.Options;
+import org.rocksdb.RocksDB;
 import org.rocksdb.RocksDBException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,12 @@ import java.util.List;
 
 public class ConnectionPoolImpl implements ConnectionPool {
     private static Logger logger = LoggerFactory.getLogger(ConnectionPoolImpl.class);
+
+
+    private static Options options = new Options().setCreateIfMissing(true);
+    static {
+        RocksDB.loadLibrary();
+    }
 
     /**
      * 空闲连接
@@ -48,20 +56,20 @@ public class ConnectionPoolImpl implements ConnectionPool {
      */
     private boolean debug = false;
 
-    private String dbPath;
-
+    private String dbPath = "";
 
     /**
      * 初始化池
      */
-    private synchronized void initPool() {
+    private synchronized void initPool() throws RocksDBException {
         if (initialized) {
             return;
         }
         initialized = true;
         if (debug) debugPrint("Connection pool initialized!");
         for (int i = 0; i < minSize; i++) {
-            Connection conn = new Connection(this, dbPath);
+            Connection conn = (Connection) RocksDB.open(options, dbPath);
+            conn.setPool(this);
             freeList.add(conn);
             ++totalSize;
             if (debug) {
@@ -141,7 +149,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
     /**
      * 增加连接池，同时将最后创建的连接返回给当前线程
      */
-    private Connection increasePool() {
+    private Connection increasePool() throws RocksDBException {
         int localStep = step;
         if (totalSize + step > maxSize) {
             localStep = maxSize - totalSize;
@@ -149,7 +157,8 @@ public class ConnectionPoolImpl implements ConnectionPool {
         Connection result = null;
         int lastIndex = localStep - 1;
         for (int i = 0; i < localStep; i++) {
-            Connection conn = new Connection(this, dbPath);
+            Connection conn = (Connection) RocksDB.open(options, dbPath);
+            conn.setPool(this);
             ++totalSize;
             if (i == lastIndex) {
                 result = conn;//最后创建的连接返回给当前线程使用
