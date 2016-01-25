@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 public class MultiThreadRdbTest implements Runnable {
     private static Logger logger = LoggerFactory.getLogger(MultiThreadRdbTest.class);
 
-    private static String path = "/data/test/conn";
+    private static String path = "/data/test/conn2";
     private static int idGenerator = 0;
     private final String threadName;
 
@@ -77,7 +77,7 @@ public class MultiThreadRdbTest implements Runnable {
         poolImpl.setDbPath("/data/test/conn");
         poolImpl.setDebug(false);
 
-        for (int i=0;i<10;i++){
+        for (int i=0;i<1;i++){
             new Thread(new MultiThreadRdbTest()).start();
         }
     }

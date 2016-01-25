@@ -23,6 +23,36 @@ public class RdbDaoTest {
     private RdbDao rdbDao;
 
     @Test
+    public void testSingleThreadPut(){
+        long start = System.currentTimeMillis();
+        for (long i=1;i<1000000;i++){
+            rdbDao.putMdAttr(i+"", getMdAttr());
+        }
+        long end = System.currentTimeMillis();
+        logger.info(String.format("total spend:%s, avg %s", (end - start), ((end - start) / 10000*1.0)));
+    }
+
+    @Test
+    public void testSingleThreadGet(){
+        long start = System.currentTimeMillis();
+        for (long i=1;i<1000000;i++){
+            rdbDao.getFileMdAttr(i+"");
+        }
+        long end = System.currentTimeMillis();
+        logger.info(String.format("total spend:%s, avg %s", (end - start), ((end - start) / 10000*1.0)));
+    }
+
+    public MdAttr getMdAttr() {
+        MdAttr mdAttr = new MdAttr();
+        mdAttr.setName("backend-fileCode");
+        mdAttr.setSize(7878);
+        mdAttr.setName("backend.t");
+        mdAttr.setAcl((short) 777);
+        mdAttr.setCreateTime(System.currentTimeMillis());
+        return mdAttr;
+    }
+
+    @Test
     public void testSetOrCreateHashBucket() {
         String distrCode = 1000 + "";
         String fileCode = "abcded1";

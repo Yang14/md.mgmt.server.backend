@@ -19,15 +19,21 @@ public class RedisDaoImpl implements RedisDao {
     @Autowired
     private Jedis jedis;
 
+    private String setMonitor = "";
+    private String getMonitor = "";
 
     @Override
     public void setOrCreateHashBucket(String key, String fileCode) {
-        jedis.rpush(key, fileCode);
+        synchronized (setMonitor) {
+            jedis.rpush(key, fileCode);
+        }
     }
 
     @Override
     public List<String> getHashBucket(String key) {
-        long len = jedis.llen(key);
-        return jedis.lrange(key, 0, len);
+        synchronized (getMonitor) {
+            long len = jedis.llen(key);
+            return jedis.lrange(key, 0, len);
+        }
     }
 }
